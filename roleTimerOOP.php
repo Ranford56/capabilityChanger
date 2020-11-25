@@ -18,6 +18,12 @@ if ( ! defined( 'WPINC') ) {
 
 class roleTimerOOP {
 
+	public $pluginName;
+
+	function __construct() {
+		$this->pluginName = plugin_basename( __FILE__ );
+	}
+
 	function uninstall(){
 		if( get_option( 'capabilityChanger' ) ){
 			delete_option('capabilityChanger' );
@@ -26,8 +32,11 @@ class roleTimerOOP {
 
 	function register(){
 		require plugin_dir_path( __FILE__ ) . 'includes/adminIndex.php';
+		require plugin_dir_path( __FILE__ ) . 'includes/settingsLink.php';
 		$adminIndex = new adminIndex();
+		$settingsLink = new settingsLink();
 		add_action( 'admin_menu', array( $adminIndex, 'adminPages' ) );
+		add_filter( "plugin_action_links_$this->pluginName", array( $settingsLink, 'settingsLinks') );
 	}
 
 }
