@@ -19,23 +19,31 @@ if ( ! defined( 'WPINC') ) {
 class roleTimerOOP {
 
 	function uninstall(){
-		if( get_option( 'capabilityChanger ' ) ){
+		if( get_option( 'capabilityChanger' ) ){
 			delete_option('capabilityChanger' );
 		}
+	}
+
+	function register(){
+		require plugin_dir_path( __FILE__ ) . 'includes/adminIndex.php';
+		$adminIndex = new adminIndex();
+		add_action( 'admin_menu', array( $adminIndex, 'adminPages' ) );
 	}
 
 }
 
 if ( class_exists('roleTimerOOP') ){
 	$roleTimerOOP = new roleTimerOOP();
+	$roleTimerOOP->register();
 }
 
 //activation
-//require_once (plugin_dir_path( __FILE__ ) . 'includes/capabilityChangerActivate.php');
-register_activation_hook( __FILE__, array( $roleTimerOOP, 'activate' ) );
+require_once plugin_dir_path( __FILE__ ) . 'includes/capabilityChangerActivate.php';
+register_activation_hook( __FILE__, array( 'capabilityChangerActivate', 'activate' ) );
 
 //deactivate
-register_deactivation_hook( __FILE__, array( $roleTimerOOP, 'deactivate') );
+require_once plugin_dir_path( __FILE__ ) . 'includes/capabilityChangerDeactivate.php';
+register_deactivation_hook( __FILE__, array( 'capabilityChangerDeactivate', 'deactivate') );
 
 //uninstall
 register_uninstall_hook( __FILE__, array( $roleTimerOOP, 'uninstall') );

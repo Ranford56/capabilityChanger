@@ -9,6 +9,8 @@ class capabilityChangerActivate
 			add_option( 'capabilityChanger', array() );
 		}
 
+
+
 		flush_rewrite_rules();
 
 	}
