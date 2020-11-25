@@ -1,7 +1,8 @@
 <?php
 
+namespace includes;
 
-class capabilityChangerDeactivate
+class deactivate
 {
 	public static function deactivate(){
 

@@ -1,0 +1,19 @@
+{
+    "name": "ranford/role-timer-oop",
+    "description": "wp-capability changer",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Ranford56",
+            "email": "ranford56z@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "includes\\": "./includes"
+        }
+    }
+}

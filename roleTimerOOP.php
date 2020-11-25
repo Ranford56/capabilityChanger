@@ -16,6 +16,13 @@ if ( ! defined( 'WPINC') ) {
 	die;
 }
 
+if( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
+	require_once dirname( __FILE__ ) . '/vendor/autoload.php';
+}
+
+use includes\Activate;
+use includes\Deactivate;
+
 class roleTimerOOP {
 
 	public $pluginName;
@@ -28,6 +35,14 @@ class roleTimerOOP {
 		if( get_option( 'capabilityChanger' ) ){
 			delete_option('capabilityChanger' );
 		}
+	}
+
+	function activateHome() {
+		Activate::activate();
+	}
+
+	function deactivateHome() {
+		Deactivate::deactivate();
 	}
 
 	function register(){
@@ -47,12 +62,12 @@ if ( class_exists('roleTimerOOP') ){
 }
 
 //activation
-require_once plugin_dir_path( __FILE__ ) . 'includes/capabilityChangerActivate.php';
-register_activation_hook( __FILE__, array( 'capabilityChangerActivate', 'activate' ) );
+//require_once plugin_dir_path( __FILE__ ) . 'includes/Activate.php';
+register_activation_hook( __FILE__, array( $roleTimerOOP, 'activateHome' ) );
 
 //deactivate
-require_once plugin_dir_path( __FILE__ ) . 'includes/capabilityChangerDeactivate.php';
-register_deactivation_hook( __FILE__, array( 'capabilityChangerDeactivate', 'deactivate') );
+//require_once plugin_dir_path( __FILE__ ) . 'includes/deactivate.php';
+register_deactivation_hook( __FILE__, array( $roleTimerOOP, 'deactivateHome') );
 
 //uninstall
 register_uninstall_hook( __FILE__, array( $roleTimerOOP, 'uninstall') );
